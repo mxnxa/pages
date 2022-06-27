@@ -5,8 +5,102 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        height: 300vh;
+        padding-top: 300px;
+        scroll-behavior: smooth;
+      }
+
+      .section {
+        height: 300px;
+      }
+
+      .section01 {
+        background: url(./1.jpg) no-repeat;
+      }
+
+      .section02 {
+        background: url(./s2.jpg) no-repeat;
+      }
+
+      .container {
+        /* height: 600px;
+        position: relative; */
+      }
+
+      .first {
+        width: 500px;
+      }
+
+      .second {
+        width: 500px;
+      }
+
+      .third {
+        transform: rotate(90deg);
+      }
+
+      h3 {
+        margin: 100px;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-    <h2>배포 완료!</h2>
+    <div class="section section01"></div>
+    <div class="section section02"></div>
+    <div class="container">
+      <p class="first">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
+        blanditiis eveniet mollitia dignissimos perspiciatis minus ea distinctio
+        accusamus. Hic mollitia minus facilis natus tenetur! Ipsa a repellendus
+        expedita animi repudiandae.
+      </p>
+      <p class="second">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
+        veritatis fugit culpa ea molestias quidem aperiam nihil quasi architecto
+        tempora nulla numquam temporibus dicta, non, provident quae tempore
+        necessitatibus quam. Earum minus dolore dolorum itaque maiores rem
+        aliquid, inventore possimus officia, deserunt dolores voluptatum,
+        numquam ipsum illo? Alias, accusantium nostrum?
+      </p>
+      <p class="third">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, minus?
+      </p>
+      <h3>첫번째</h3>
+      <h3>두번째</h3>
+      <h3>세번째</h3>
+      <button class="top">top</button>
+    </div>
+    <script>
+      const section01 = document.querySelector(".section01");
+      const section02 = document.querySelector(".section02");
+      const first = document.querySelector(".first");
+      const second = document.querySelector(".second");
+      const third = document.querySelector(".third");
+      const headList = document.querySelectorAll("h3");
+      const toTop = document.querySelector(".top");
+
+      toTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      window.addEventListener("scroll", function (e) {
+        section01.style.backgroundPosition = `left ${window.scrollY / 2}px`;
+        section02.style.backgroundPosition = `right ${window.scrollY / 4}px`;
+
+        first.style.transform = `translateX(${scrollY / 3}px)`;
+        second.style.transform = `translateX(${scrollY / -3}px)`;
+        third.style.transform = `rotate(90deg) translateX(${scrollY * 2}px)`;
+
+        console.log(scrollY);
+
+        headList[0].style.opacity = (scrollY - 500) / 300;
+        headList[0].style.transform = `translateY(${scrollY / -20}px)`;
+        headList[1].style.opacity = (scrollY - 700) / 300;
+        headList[2].style.opacity = (scrollY - 900) / 300;
+      });
+    </script>
   </body>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .section {
+        height: 100vh;
+      }
+
+      .indicatorList {
+        position: fixed;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+      }
+
+      .indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.6);
+        margin: 10px 0;
+        cursor: pointer;
+      }
+
+      .indicator.active {
+        background-color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section"></div>
+    <div class="section"></div>
+    <div class="section"></div>
+    <div class="indicatorList">
+      <div class="indicator"></div>
+      <div class="indicator"></div>
+      <div class="indicator"></div>
+    </div>
+
+    <script>
+      let currentSection = Math.round(window.scrollY / window.innerHeight);
+      scrollTo({ top: currentSection * innerHeight, behavior: "smooth" });
+
+      const sectionList = document.querySelectorAll(".section");
+      sectionList[0].style.background = "cadetblue";
+      sectionList[1].style.background = "coral";
+      sectionList[2].style.background = "cornflowerblue";
+
+      const indicatorList = document.querySelectorAll(".indicator");
+
+      indicatorList.forEach((indicator, idx) => {
+        indicator.addEventListener("click", function () {
+          window.scrollTo({
+            top: window.innerHeight * idx,
+            behavior: "smooth",
+          });
+          currentSection = idx;
+        });
+      });
+
+      function scrollMove(direction) {
+        console.log(currentSection);
+        scrollTo({
+          top: window.innerHeight * (currentSection + direction),
+          behavior: "smooth",
+        });
+        currentSection += direction;
+      }
+
+      window.addEventListener(
+        "wheel",
+        function (e) {
+          e.preventDefault();
+          // classList.contains : scrolling이라는 클래스가 있는지 확인
+          if (document.body.classList.contains("scrolling")) return;
+          document.body.classList.add("scrolling");
+          setTimeout(() => {
+            document.body.classList.remove("scrolling");
+          }, 500);
+
+          if (e.deltaY > 0) {
+            if (currentSection > sectionList.length - 2) return;
+            scrollMove(1);
+          } else if (e.deltaY < 0) {
+            if (currentSection < 1) return;
+            scrollMove(-1);
+          }
+        },
+        { passive: false }
+      );
+    </script>
+  </body>
+</html>
